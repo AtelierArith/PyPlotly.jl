@@ -1,0 +1,45 @@
+version: '3'
+services:
+  jupyter:
+    image: pyplotlyjl
+    container_name: pyplotlyjl-jupyter
+    volumes:
+      - ./:/workspace/PyPlotly.jl
+    working_dir: /workspace/PyPlotly.jl
+    ports:
+      - "8888:8888"
+    command: jupyter notebook --notebook-dir /workspace/PyPlotly.jl --ip=0.0.0.0 --allow-root
+  lab:
+    image: pyplotlyjl
+    container_name: pyplotlyjl-lab
+    volumes:
+      - ./:/workspace/PyPlotly.jl
+    working_dir: /workspace/PyPlotly.jl
+    ports:
+      - "8888:8888"
+    command: jupyter lab --notebook-dir /workspace/PyPlotly.jl --ip=0.0.0.0 --allow-root
+  julia:
+    image: pyplotlyjl
+    container_name: pyplotlyjl-julia
+    volumes:
+      - ./:/workspace/PyPlotly.jl
+    working_dir: /workspace/PyPlotly.jl
+    command: julia --project=/workspace/PyPlotly.jl
+  web:
+    image: pyplotlyjl
+    container_name: pyplotlyjl-packagedocs
+    volumes:
+      - ./:/workspace/PyPlotly.jl
+    working_dir: /workspace/PyPlotly.jl
+    ports:
+      - "8000:8000"
+    command: make web
+  pluto:
+    image: pyplotlyjl
+    container_name: pyplotlyjl-pluto
+    volumes:
+      - ./:/workspace/PyPlotly.jl
+    working_dir: /workspace/PyPlotly.jl
+    ports:
+      - "1234:1234"
+    command: julia -e 'import Pluto; Pluto.run(host="0.0.0.0", port=1234)'
