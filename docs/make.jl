@@ -6,11 +6,11 @@ DocMeta.setdocmeta!(PyPlotly, :DocTestSetup, :(using PyPlotly); recursive=true)
 makedocs(;
     modules=[PyPlotly],
     authors="SatoshiTerasaki <terasakisatoshi.math@gmail.com> and contributors",
-    repo="https://github.com/terasakisatoshi/PyPlotly.jl/blob/{commit}{path}#{line}",
+    repo="https://github.com/AtelierArith/PyPlotly.jl/blob/{commit}{path}#{line}",
     sitename="PyPlotly.jl",
     format=Documenter.HTML(;
         prettyurls=get(ENV, "CI", "false") == "true",
-        canonical="https://terasakisatoshi.github.io/PyPlotly.jl",
+        canonical="https://AtelierArith.github.io/PyPlotly.jl",
         assets=String[],
     ),
     pages=[
@@ -19,6 +19,6 @@ makedocs(;
 )
 
 deploydocs(;
-    repo="github.com/terasakisatoshi/PyPlotly.jl",
+    repo="github.com/AtelierArith/PyPlotly.jl",
     devbranch="main",
 )
