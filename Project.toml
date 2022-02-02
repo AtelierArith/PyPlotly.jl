@@ -3,6 +3,11 @@ uuid = "1f096619-141e-4d77-a13b-040156ae333b"
 authors = ["SatoshiTerasaki <terasakisatoshi.math@gmail.com> and contributors"]
 version = "0.1.0"
 
+[deps]
+PyCall = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
+Reexport = "189a3867-3050-52da-a836-e630ba90ab69"
+ScikitLearn = "3646fa90-6ef7-5e7e-9f22-8aca16db6324"
+
 [compat]
 julia = "1"
 

@@ -63,6 +63,8 @@ RUN curl -kL https://bootstrap.pypa.io/get-pip.py | python3 && \
     && \
     echo Done
 
+RUN pip3 install plotly scikit-learn numpy
+
 # Install/enable extension for Jupyter Notebook users
 RUN pip3 install jupyter-resource-usage && \
     jupyter contrib nbextension install --user && \
