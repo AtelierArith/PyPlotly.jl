@@ -63,7 +63,8 @@ for func in px_functions
 end
 
 function __init__()
-    copy!(px, pyimport_conda("plotly.express", "plotly", "plotly"))
+    pyimport_conda("pandas", "pandas")
+    copy!(px, pyimport("plotly.express", "plotly", "plotly"))
 end
 # Write your package code here.
 
