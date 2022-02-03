@@ -58,10 +58,10 @@ const px_functions = [
     :defaults,
     :get_trendline_results,
     :data,
-    :colors
+    :colors,
 ]
 
-sym2obj = Dict{Symbol, Union{Function, DataType}}()
+sym2obj = Dict{Symbol,Union{Function,DataType}}()
 
 for func in px_functions
     @eval begin
@@ -102,8 +102,8 @@ for class in px_classes
     end
 end
 
-Base.getproperty(px::Px, s::Symbol)= sym2obj[s]
-Base.propertynames(px::Px)= px_functions
+Base.getproperty(px::Px, s::Symbol) = sym2obj[s]
+Base.propertynames(px::Px) = px_functions
 
 function __init__()
     pyimport_conda("pandas", "pandas")

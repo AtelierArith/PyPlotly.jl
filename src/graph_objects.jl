@@ -9,7 +9,6 @@ const graph_objects = PyNULL()
 struct Go end
 const go = Go()
 
-
 const go_classes = Symbol[
     :Waterfall,
     :Volume,
@@ -90,7 +89,7 @@ const go_classes = Symbol[
     :FigureWidget,
 ]
 
-sym2obj = Dict{Symbol, Union{Function, DataType}}()
+sym2obj = Dict{Symbol,Union{Function,DataType}}()
 
 for class in go_classes
     @eval begin
@@ -119,56 +118,56 @@ for class in go_classes
 end
 
 const go_methods = [
-:waterfall,
- :volume,
- :violin,
- :treemap,
- :table,
- :surface,
- :sunburst,
- :streamtube,
- :splom,
- :scatterternary,
- :scattersmith,
- :scatterpolargl,
- :scatterpolar,
- :scattermapbox,
- :scattergl,
- :scattergeo,
- :scattercarpet,
- :scatter3d,
- :scatter,
- :sankey,
- :pointcloud,
- :pie,
- :parcoords,
- :parcats,
- :ohlc,
- :mesh3d,
- :isosurface,
- :indicator,
- :image,
- :icicle,
- :histogram2dcontour,
- :histogram2d,
- :histogram,
- :heatmapgl,
- :heatmap,
- :funnelarea,
- :funnel,
- :densitymapbox,
- :contourcarpet,
- :contour,
- :cone,
- :choroplethmapbox,
- :choropleth,
- :carpet,
- :candlestick,
- :box,
- :barpolar,
- :bar,
- :layout
- ]
+    :waterfall,
+    :volume,
+    :violin,
+    :treemap,
+    :table,
+    :surface,
+    :sunburst,
+    :streamtube,
+    :splom,
+    :scatterternary,
+    :scattersmith,
+    :scatterpolargl,
+    :scatterpolar,
+    :scattermapbox,
+    :scattergl,
+    :scattergeo,
+    :scattercarpet,
+    :scatter3d,
+    :scatter,
+    :sankey,
+    :pointcloud,
+    :pie,
+    :parcoords,
+    :parcats,
+    :ohlc,
+    :mesh3d,
+    :isosurface,
+    :indicator,
+    :image,
+    :icicle,
+    :histogram2dcontour,
+    :histogram2d,
+    :histogram,
+    :heatmapgl,
+    :heatmap,
+    :funnelarea,
+    :funnel,
+    :densitymapbox,
+    :contourcarpet,
+    :contour,
+    :cone,
+    :choroplethmapbox,
+    :choropleth,
+    :carpet,
+    :candlestick,
+    :box,
+    :barpolar,
+    :bar,
+    :layout,
+]
 
 for func in go_methods
     @eval begin
