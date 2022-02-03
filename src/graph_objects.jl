@@ -4,8 +4,11 @@ using PyCall
 
 export go
 
-const plotly = PyNULL()
-const go = PyNULL()
+const graph_objects = PyNULL()
+
+struct Go end
+const go = Go()
+
 
 graph_objects_classes = Symbol[
     :Waterfall,
@@ -87,11 +90,15 @@ graph_objects_classes = Symbol[
     :FigureWidget,
 ]
 
+sym2type = Dict{Symbol, DataType}()
+
 for class in graph_objects_classes
     @eval begin
         struct $class
             pyobj::PyObject
-            $(class)(args..., ; kwargs...) = new(go.$(class)(args...; kwargs...))
+            function $(class)(args..., ; kwargs...)
+                new(graph_objects.$(class)(args...; kwargs...))
+            end
         end
 
         PyObject(t::$(class)) = t.pyobj
@@ -107,15 +114,22 @@ for class in graph_objects_classes
                 return getproperty(getfield(t, :pyobj), s)
             end
         end
-
-        export $(class)
+        sym2type[nameof($class)] = $class
     end
 end
 
+function Base.getproperty(go::Go, s::Symbol)
+    if s in fieldnames(Go)
+        getfield(go, s)
+    else
+        sym2type[s]
+    end
+end
+
+Base.propertynames(go::Go) = graph_objects_classes
 
 function __init__()
-    copy!(plotly, pyimport_conda("plotly", "plotly", "plotly"))
-    copy!(go, pyimport_conda("plotly.graph_objects", "plotly", "plotly"))
+    copy!(graph_objects, pyimport_conda("plotly.graph_objects", "plotly", "plotly"))
 end
 
 end
