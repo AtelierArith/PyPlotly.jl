@@ -3,7 +3,11 @@ module Express
 using PyCall
 
 export px
-const px = PyNULL()
+
+struct Px end
+px = Px()
+
+const express = PyNULL()
 
 px_functions = [
     :absolute_import,
@@ -54,17 +58,22 @@ px_functions = [
     :colors
 ]
 
+sym2func=Dict{Symbol, Function}()
 for func in px_functions
     @eval begin
         function $(func)(args...; kwargs...)
-            px.$(func)(args...; kwargs...)
+            express.$(func)(args...; kwargs...)
         end
+        sym2func[nameof($func)] = $func
     end
 end
 
+Base.getproperty(px::Px, s::Symbol)= sym2func[s]
+Base.propertynames(px::Px)= px_functions
+
 function __init__()
     pyimport_conda("pandas", "pandas")
-    copy!(px, pyimport_conda("plotly.express", "plotly", "plotly"))
+    copy!(express, pyimport_conda("plotly.express", "plotly", "plotly"))
 end
 # Write your package code here.
 
