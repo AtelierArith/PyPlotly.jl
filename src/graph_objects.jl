@@ -175,15 +175,15 @@ for func in go_methods
         function $(func)(args...; kwargs...)
             graph_objects.$(func)(args...; kwargs...)
         end
-        sym2obj[nameof($func)] = $func
+        sym2obj[nameof($func)] = $(func)
     end
 end
 
 function Base.getproperty(go::Go, s::Symbol)
     if s in fieldnames(Go)
-        getfield(go, s)
+        return getfield(go, s)
     else
-        sym2obj[s]
+        return sym2obj[s]
     end
 end
 
