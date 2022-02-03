@@ -10,7 +10,7 @@ struct Go end
 const go = Go()
 
 
-graph_objects_classes = Symbol[
+const go_classes = Symbol[
     :Waterfall,
     :Volume,
     :Violin,
@@ -90,11 +90,11 @@ graph_objects_classes = Symbol[
     :FigureWidget,
 ]
 
-sym2type = Dict{Symbol, DataType}()
+sym2obj = Dict{Symbol, Union{Function, DataType}}()
 
-for class in graph_objects_classes
+for class in go_classes
     @eval begin
-        struct $class
+        struct $(class)
             pyobj::PyObject
             function $(class)(args..., ; kwargs...)
                 new(graph_objects.$(class)(args...; kwargs...))
@@ -114,7 +114,68 @@ for class in graph_objects_classes
                 return getproperty(getfield(t, :pyobj), s)
             end
         end
-        sym2type[nameof($class)] = $class
+        sym2obj[nameof($class)] = $(class)
+    end
+end
+
+const go_methods = [
+:waterfall,
+ :volume,
+ :violin,
+ :treemap,
+ :table,
+ :surface,
+ :sunburst,
+ :streamtube,
+ :splom,
+ :scatterternary,
+ :scattersmith,
+ :scatterpolargl,
+ :scatterpolar,
+ :scattermapbox,
+ :scattergl,
+ :scattergeo,
+ :scattercarpet,
+ :scatter3d,
+ :scatter,
+ :sankey,
+ :pointcloud,
+ :pie,
+ :parcoords,
+ :parcats,
+ :ohlc,
+ :mesh3d,
+ :isosurface,
+ :indicator,
+ :image,
+ :icicle,
+ :histogram2dcontour,
+ :histogram2d,
+ :histogram,
+ :heatmapgl,
+ :heatmap,
+ :funnelarea,
+ :funnel,
+ :densitymapbox,
+ :contourcarpet,
+ :contour,
+ :cone,
+ :choroplethmapbox,
+ :choropleth,
+ :carpet,
+ :candlestick,
+ :box,
+ :barpolar,
+ :bar,
+ :layout
+ ]
+
+for func in go_methods
+    @eval begin
+        function $(func)(args...; kwargs...)
+            graph_objects.$(func)(args...; kwargs...)
+        end
+        sym2obj[nameof($func)] = $func
     end
 end
 
@@ -122,11 +183,11 @@ function Base.getproperty(go::Go, s::Symbol)
     if s in fieldnames(Go)
         getfield(go, s)
     else
-        sym2type[s]
+        sym2obj[s]
     end
 end
 
-Base.propertynames(go::Go) = graph_objects_classes
+Base.propertynames(go::Go) = vcat(go_methods, go_classes)
 
 function __init__()
     copy!(graph_objects, pyimport_conda("plotly.graph_objects", "plotly", "plotly"))
