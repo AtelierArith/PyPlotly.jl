@@ -21,15 +21,6 @@ using PyPlotly.Express
 ```
 
 ```julia
-function Base.show(io::IO, mime::MIME, fig::GraphObjects.Figure)
-    jsonobj = JSON.parse(fig.to_json())
-    traces = PlotlyJS.GenericTrace.(jsonobj["data"])
-    layout = PlotlyJS.Layout(jsonobj["layout"])
-    show(io, mime, PlotlyJS.plot(traces, layout))
-end
-```
-
-```julia
 fig = px.scatter(x=[0, 1, 2, 3, 4], y=[0, 1, 4, 9, 16])
 fig
 ```
@@ -41,9 +32,8 @@ fig = go.Figure(
         y=[1,4,2],
     )
 )
+```
 
-jsonobj = JSON.parse(fig.to_json())
-traces = PlotlyJS.GenericTrace.(jsonobj["data"])
-layout = PlotlyJS.Layout(jsonobj["layout"])
-PlotlyJS.plot(traces, layout)
+```julia
+
 ```
