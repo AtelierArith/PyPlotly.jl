@@ -5,9 +5,9 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.13.6
+      jupytext_version: 1.13.5
   kernelspec:
-    display_name: julia 1.7.1
+    display_name: Julia 1.7.1
     language: julia
     name: julia-1.7
 ---
@@ -164,9 +164,32 @@ fig.add_trace(
 ```
 
 ```julia
-"""
-Yeah ...!!! We did it!!!
-Today's streaming is over.
-Thank you for watching
-"""
+
+```
+
+```julia
+using PyPlotly
+using Random
+Random.seed!(0)
+
+N = 100
+random_x = range(0, 1, length=N)
+random_y0 = randn(N) .+ 5
+random_y1 = randn(N)
+random_y2 = randn(N) .- 5
+
+fig = go.Figure()
+
+# Add traces
+fig.add_trace(go.Scatter(x=random_x, y=random_y0,
+                    mode="markers",
+                    name="markers"))
+fig.add_trace(go.Scatter(x=random_x, y=random_y1,
+                    mode="lines+markers",
+                    name="lines+markers"))
+fig.add_trace(go.Scatter(x=random_x, y=random_y2,
+                    mode="lines",
+                    name="lines"))
+
+fig
 ```
