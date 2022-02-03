@@ -5,7 +5,7 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.13.6
+      jupytext_version: 1.13.5
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -20,7 +20,7 @@ from plotly import express
 ```python
 def create_symbols(mod, target=None):
     symbols = []
-    for attr in mod.__dir__():
+    for attr in mod.__all__:
         if attr.startswith("_"):
             continue
 
@@ -39,7 +39,19 @@ create_symbols(plotly)
 ```
 
 ```python
-create_symbols(express, target="method")
+plotly.graph_objects.__all__
+```
+
+```python
+plotly.express.__all__
+```
+
+```python
+create_symbols(express, target="class")
+```
+
+```python
+create_symbols(plotly.graph_objects, target="method")
 ```
 
 ```python

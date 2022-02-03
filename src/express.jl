@@ -1,11 +1,18 @@
 module Express
 
+using ..GraphObjects: Figure
+
 using PyCall
 
 export px
-const px = PyNULL()
 
-px_functions = [
+struct Px end
+px = Px()
+
+const plotly = PyNULL()
+const express = PyNULL()
+
+const px_functions = [
     :absolute_import,
     :optional_imports,
     :pd,
@@ -54,17 +61,54 @@ px_functions = [
     :colors
 ]
 
+sym2obj = Dict{Symbol, Union{Function, DataType}}()
+
 for func in px_functions
     @eval begin
         function $(func)(args...; kwargs...)
-            px.$(func)(args...; kwargs...)
+            ret = express.$(func)(args...; kwargs...)
+            if pybuiltin("isinstance")(ret, plotly.graph_objs._figure.Figure)
+                Figure(ret)
+            end
         end
+        sym2obj[nameof($func)] = $func
     end
 end
 
+const px_classes = [:IdentityMap, :Constant, :Range]
+for class in px_classes
+    @eval begin
+        struct $(class)
+            pyobj::PyObject
+            function $(class)(args..., ; kwargs...)
+                new(graph_objects.$(class)(args...; kwargs...))
+            end
+        end
+
+        PyObject(t::$(class)) = t.pyobj
+
+        function Base.propertynames(t::$(class))
+            propertynames(getfield(t, :pyobj))
+        end
+
+        function Base.getproperty(t::$(class), s::Symbol)
+            if s in fieldnames($(class))
+                return getfield(t, s)
+            else
+                return getproperty(getfield(t, :pyobj), s)
+            end
+        end
+        sym2obj[nameof($class)] = $(class)
+    end
+end
+
+Base.getproperty(px::Px, s::Symbol)= sym2obj[s]
+Base.propertynames(px::Px)= px_functions
+
 function __init__()
     pyimport_conda("pandas", "pandas")
-    copy!(px, pyimport_conda("plotly.express", "plotly", "plotly"))
+    copy!(plotly, pyimport_conda("plotly", "plotly", "plotly"))
+    copy!(express, pyimport_conda("plotly.express", "plotly", "plotly"))
 end
 # Write your package code here.
 
