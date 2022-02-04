@@ -17,13 +17,7 @@ using PyCall
 ```
 
 ```julia
-
-```
-
-```julia
 using PyPlotly
-using PyPlotly.GraphObjects
-using PyPlotly.Express
 ```
 
 ```julia
@@ -161,10 +155,8 @@ fig.add_trace(
         hoverinfo="skip",
     )
 )
-```
 
-```julia
-
+fig
 ```
 
 ```julia
