@@ -13,29 +13,42 @@ jupyter:
 ---
 
 ```python
+express.data
+```
+
+```python
+import importlib
+import inspect
+
 import plotly
 from plotly import express
 ```
 
 ```python
-def create_symbols(mod, target=None):
+inspect.ismodule(plotly.graph_objects)
+```
+
+```python
+def create_symbols(mod, target):
     symbols = []
     for attr in mod.__all__:
         if attr.startswith("_"):
             continue
-
-        if target == "class":
-            if attr[0].isupper() and (not attr.isupper()):
-                symbols.append(":" + attr)
-        elif target == "method":
-            if attr[0].islower():
-                symbols.append(":" + attr)
-        else:
-            symbols.append(":" + attr)
+        satisfy = eval(f"inspect.{target}(mod.{attr})")
+        if satisfy:
+            symbols.append(":"+attr)
     return symbols
 
 
-create_symbols(plotly)
+create_symbols(plotly, "ismodule")
+```
+
+```python
+create_symbols(plotly.graph_objects, "ismodule")
+```
+
+```python
+create_symbols(plotly.express, "isclass")
 ```
 
 ```python
