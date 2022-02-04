@@ -15,43 +15,43 @@ const plotly = PyNULL()
 const express = PyNULL()
 
 const px_functions = [:scatter,
- :scatter_3d,
- :scatter_polar,
- :scatter_ternary,
- :scatter_mapbox,
- :scatter_geo,
- :scatter_matrix,
- :density_contour,
- :density_heatmap,
- :density_mapbox,
- :line,
- :line_3d,
- :line_polar,
- :line_ternary,
- :line_mapbox,
- :line_geo,
- :parallel_coordinates,
- :parallel_categories,
- :area,
- :bar,
- :timeline,
- :bar_polar,
- :violin,
- :box,
- :strip,
- :histogram,
- :ecdf,
- :choropleth,
- :choropleth_mapbox,
- :pie,
- :sunburst,
- :treemap,
- :icicle,
- :funnel,
- :funnel_area,
- :imshow,
- :set_mapbox_access_token,
- :get_trendline_results]
+    :scatter_3d,
+    :scatter_polar,
+    :scatter_ternary,
+    :scatter_mapbox,
+    :scatter_geo,
+    :scatter_matrix,
+    :density_contour,
+    :density_heatmap,
+    :density_mapbox,
+    :line,
+    :line_3d,
+    :line_polar,
+    :line_ternary,
+    :line_mapbox,
+    :line_geo,
+    :parallel_coordinates,
+    :parallel_categories,
+    :area,
+    :bar,
+    :timeline,
+    :bar_polar,
+    :violin,
+    :box,
+    :strip,
+    :histogram,
+    :ecdf,
+    :choropleth,
+    :choropleth_mapbox,
+    :pie,
+    :sunburst,
+    :treemap,
+    :icicle,
+    :funnel,
+    :funnel_area,
+    :imshow,
+    :set_mapbox_access_token,
+    :get_trendline_results]
 
 sym2obj = Dict{Symbol,Union{Function,DataType}}()
 
@@ -71,7 +71,6 @@ const px_modules = [:data, :colors, :trendline_functions]
 
 for m in px_modules
     @eval begin
-
         struct $(m) <: PxModule
             pyobj::PyObject
             $(m)() = new(getproperty(express, nameof($m)))
@@ -132,7 +131,7 @@ function Base.getproperty(px::Px, s::Symbol)
         end
     end
 end
-Base.propertynames(px::Px) = vcat(px_functions,px_modules,px_classes)
+Base.propertynames(px::Px) = vcat(px_functions, px_modules, px_classes)
 
 function __init__()
     pyimport_conda("pandas", "pandas")
