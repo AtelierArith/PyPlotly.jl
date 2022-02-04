@@ -14,7 +14,8 @@ px = Px()
 const plotly = PyNULL()
 const express = PyNULL()
 
-const px_functions = [:scatter,
+const px_functions = [
+    :scatter,
     :scatter_3d,
     :scatter_polar,
     :scatter_ternary,
@@ -51,7 +52,8 @@ const px_functions = [:scatter,
     :funnel_area,
     :imshow,
     :set_mapbox_access_token,
-    :get_trendline_results]
+    :get_trendline_results,
+]
 
 sym2obj = Dict{Symbol,Union{Function,DataType}}()
 
