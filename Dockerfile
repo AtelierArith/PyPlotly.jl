@@ -63,7 +63,7 @@ RUN curl -kL https://bootstrap.pypa.io/get-pip.py | python3 && \
     && \
     echo Done
 
-RUN pip3 install plotly numpy pandas
+RUN pip3 install plotly numpy pandas sklearn
 
 # Install/enable extension for Jupyter Notebook users
 RUN pip3 install jupyter-resource-usage && \
