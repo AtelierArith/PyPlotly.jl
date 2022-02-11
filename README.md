@@ -82,3 +82,9 @@ fig.add_trace(go.Scatter(x=random_x, y=random_y2,
 fig
 ```
 
+# Appendix
+
+- [JuliaLang Live Coding (Making PyPlotly.jl) with a silent cat](https://www.youtube.com/watch?v=Nb_w0MV4OLs&t=1994s)
+- [Japanese blog post](https://zenn.dev/terasakisatoshi/articles/ebac6e005b9200)
+- [Julia discourse](https://discourse.julialang.org/t/pyplotly-jl/76035)
+- [PyPlotly.jl + Dash.jl](https://github.com/plotly/Dash.jl/issues/50#issuecomment-1033972687)
