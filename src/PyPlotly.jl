@@ -1,5 +1,6 @@
 module PyPlotly
 
+using REPL
 using Reexport: @reexport
 using JSON
 
