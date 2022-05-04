@@ -1,11 +1,12 @@
 module PyPlotly
 
+using REPL
 using Reexport: @reexport
 using JSON
-using PlotlyJS: PlotlyJS
+using PyCall: PyNULL, pyimport_conda
 
-include("plotly.jl")
-@reexport using .Plotly
+export plotly
+const plotly = PyNULL()
 
 include("graph_objects.jl")
 @reexport using .GraphObjects
@@ -13,18 +14,13 @@ include("graph_objects.jl")
 include("express.jl")
 @reexport using .Express
 
-function create_plotlyjs(fig::GraphObjects.Figure)
-    jsonobj = JSON.parse(fig.to_json())
-    traces = PlotlyJS.GenericTrace.(jsonobj["data"])
-    layout = PlotlyJS.Layout(jsonobj["layout"])
-    return PlotlyJS.plot(traces, layout)
-end
+Base.show(io, mime::MIME"text/html", fig::GraphObjects.Figure) = show(io, mime, fig.pyobj)
 
-function Base.show(io::IO, mime::MIME, fig::GraphObjects.Figure)
-    show(io, mime, create_plotlyjs(fig))
-end
-function Base.display(::PlotlyJS.PlotlyJSDisplay, fig::GraphObjects.Figure)
-    PlotlyJS.display_blink(create_plotlyjs(fig))
+# Call fig.show() when one is trying to display `fig` object from Julia REPL
+Base.display(d::REPL.REPLDisplay, fig::GraphObjects.Figure) = fig.show()
+
+function __init__()
+    copy!(plotly, pyimport_conda("plotly", "plotly", "plotly"))
 end
 
 end
