@@ -1,8 +1,8 @@
-# PyPlotly 
+# PyPlotly
 
-[![Build Status](https://github.com/AtelierArith/PyPlotly.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/AtelierArith/PyPlotly.jl/actions/workflows/CI.yml?query=branch%3Amain) 
+[![Build Status](https://github.com/AtelierArith/PyPlotly.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/AtelierArith/PyPlotly.jl/actions/workflows/CI.yml?query=branch%3Amain)
 
-[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://AtelierArith.github.io/PyPlotly.jl/stable) 
+[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://AtelierArith.github.io/PyPlotly.jl/stable)
 
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://AtelierArith.github.io/PyPlotly.jl/dev)
 
@@ -82,6 +82,34 @@ fig.add_trace(go.Scatter(x=random_x, y=random_y2,
 fig
 ```
 
+# Display object in notebook
+
+## JupyterLab
+Try running the following example in your notebook
+
+```julia
+using PyPlotly
+
+df = px.data.iris()
+fig = px.scatter(
+    df,
+    x="sepal_width",
+    y="sepal_length",
+    color="species",
+    size="petal_length",
+    hover_data=["petal_width"],
+)
+fig
+```
+
+<img width="600" alt="image" src="https://user-images.githubusercontent.com/16760547/166682557-260cc5a0-1321-4c07-9080-26459cf85706.png">
+
+
+## Pluto
+
+<img width="600" alt="image" src="https://user-images.githubusercontent.com/16760547/166682859-f3d342e6-2cc5-414b-b9a5-ec918625b6f7.png">
+
+Code is available from [here](https://github.com/AtelierArith/PyPlotly.jl/blob/main/playground/pluto/jlsample.jl).
 # Appendix
 
 - [JuliaLang Live Coding (Making PyPlotly.jl) with a silent cat](https://www.youtube.com/watch?v=Nb_w0MV4OLs&t=1994s)
